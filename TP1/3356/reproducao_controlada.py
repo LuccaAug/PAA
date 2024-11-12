@@ -1,4 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Uma das forças motoras que auxiliaram no desenvolvimento da região sul do Brasil foi a força equina. Talvez por isso a região tem uma cultura de criação de cavalos de raça, sendo possível encontrar fazendas de cavalos tanto no estado do Paraná, quanto em Santa Catarina e no Rio Grande do Sul.
+
+Uma dessas fazendas pretende realizar um mapeamento genealógico de seus animais e melhorar a característica genética das reproduções. A ideia do veterinário responsável é não cruzar animais que tenham relação de parentesco, ou seja, antes de cruzar dois animais, os veterinários pretendem verificar se eles tem algum ascendente em comum. Se este for o caso, os animais não deverão formar um casal para reprodução. Para realizar tal mapeamento, o veterinário solicitou um programa que, dada uma lista de parentesco e um par de animais, decida se eles têm parentesco ou não.
+
+Imagem: https://resources.beecrowd.com/gallery/images/contests/UOJ_3682.png
+
+Na figura exemplo, Alice e Bob geraram dois filhos, Gina e Bonnie. Ainda, um teste entre Elis e Ped deve retornar verdadeiro (existe parentesco) e entre Zec e Perf deve retornar falso (não existe parentesco).
+
+Entrada
+A primeira linha da entrada possui três números inteiros N (3 ≤ N ≤ 15), C (0 < C ≤ N) e T (0 < T ≤ N*(N-1)), que representam, respectivamente, o número de animais, o número de relações de parentesco conhecidas e o número de casos de teste. Em seguida, são fornecidas as C relações de parentesco com os dois nomes dos pais e o respectivo filho gerado. Depois dos cruzamentos são fornecidos os T casos de teste, cada um composto pelos nomes dos dois animais que se pretende cruzar. Cada nome de animal é composto por até 10 letras do alfabeto português (26 letras) e todos os nomes são separados por um único espaço entre si.
+
+Saída
+Seu programa deve imprimir, para cada caso de teste, "verdadeiro" se existir parentesco entre os animais e "falso" se não existir.
+"""
 
 class ReproducaoControlada:
     label_grafo: dict
