@@ -30,7 +30,24 @@ class Cidade:
             self.grafo[b].append(a)
     
     def verifica_conexidade(self) -> bool:
-        # TODO: lógica de conexidade
+        def _DFS(v_inicial: int, v_visitados: list, v: int) -> [bool | list[int]]:
+            v_visitados[v] = 1
+            for u in self.grafo[v]:
+                if u < v_inicial:
+                    return True
+                if not v_visitados[u]:
+                    v_visitados = _DFS(v_inicial, v_visitados, u)
+                    if isinstance(v_visitados, bool):
+                        return True
+            return v_visitados
+
+        for vertice in range(self.N):
+            vertices_visitados = _DFS(vertice, [0] * self.N, vertice)
+            # print(vertice, ': ', vertices_visitados)
+            if isinstance(vertices_visitados, bool):
+                continue
+            if sum(vertices_visitados) < self.N:
+                return False
 
         return True
 
@@ -50,12 +67,12 @@ if __name__ == '__main__':
             break
 
         c = Cidade(N)
-        print(c)
+        # print(c)
 
         linhas_de_arestas = [(int(x) for x in input().split()) for _ in range(0, M)]
         for A, B, sentidos in linhas_de_arestas:
             c.insere_rua(A, B, (sentidos == 2))
 
+        # print(c)
         G = int(c.verifica_conexidade())
-        print(c)
         print(G)
