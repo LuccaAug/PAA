@@ -8,11 +8,11 @@ A entrada contém vários casos de teste. A primeira linha de um caso de teste c
 
 O ultimo caso de teste é seguido por uma linha que contém apenas dois números zero separados por um espaço em branco.
 
-class Grafo:
 Saída
 Para cada caso de teste seu programa deve imprimir uma linha contendo um inteiro G, onde G é igual a 1 se o requisito de conexidade está satisfeito, ou G é igual a 0, caso contrário.
 """
 
+class Cidade:
     N: int
     grafo: list
 
