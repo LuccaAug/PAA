@@ -8,42 +8,37 @@ A entrada contém vários casos de teste. A primeira linha de um caso de teste c
 
 O ultimo caso de teste é seguido por uma linha que contém apenas dois números zero separados por um espaço em branco.
 
-class Grafo:
 Saída
 Para cada caso de teste seu programa deve imprimir uma linha contendo um inteiro G, onde G é igual a 1 se o requisito de conexidade está satisfeito, ou G é igual a 0, caso contrário.
 """
 
+class Cidade:
     N: int
-    grafo: list
+    c: list
 
     def __init__(self, n: int) -> None:
         self.N = n
         self.grafo = [list() for _ in range(n)]
 
-    def _insere_aresta(self, fonte, destino) -> None:
-        # Força os vértices iniciados em 1 à iniciarem em 0
-        fonte -= 1
-        destino -= 1
+    def insere_rua(self, a: int, b: int, mao_dupla: bool) -> None:
+        a -= 1
+        b -= 1
 
-        self.grafo[fonte].append(destino)
+        self.grafo[a].append(b)
 
-    def insere_arestas(self, lista_de_arestas: list) -> None:
-        for A, B, sentidos in lista_de_arestas:
-            self._insere_aresta(A, B)
-
-            mao_dupla = sentidos == 2
-            if mao_dupla:
-                self._insere_aresta(B, A)
+        if mao_dupla:
+            self.grafo[b].append(a)
     
     def verifica_conexidade(self) -> bool:
         # TODO: lógica de conexidade
 
         return True
 
-    def print_grafo(self) -> None:
-        print(f"Grafo:")
+    def __str__(self) -> str:
+        _s = f"Grafo:\n"
         for i, l in enumerate(self.grafo):
-            print(f"\t{i}: {self.grafo[i]}")
+            _s += f"\t{i}: {l}\n"
+        return _s
 
 if __name__ == '__main__':
     while True:
@@ -54,13 +49,13 @@ if __name__ == '__main__':
         if N == 0 and M == 0:
             break
 
-        grafo = Grafo(N)
-        # print_grafo(r)
+        c = Cidade(N)
+        print(c)
 
         linhas_de_arestas = [(int(x) for x in input().split()) for _ in range(0, M)]
-        grafo.insere_arestas(linhas_de_arestas)
-        grafo.print_grafo()
+        for A, B, sentidos in linhas_de_arestas:
+            c.insere_rua(A, B, (sentidos == 2))
 
-        resultado_bool = grafo.verifica_conexidade()
-        resultado_int = '1' if resultado_bool else '0'
-        print(resultado_int)
+        G = int(c.verifica_conexidade())
+        print(c)
+        print(G)
