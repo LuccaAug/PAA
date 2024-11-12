@@ -42,11 +42,6 @@ class Livrolandia:
 
         return (self.custo_biblioteca * numero_componentes_conexas) + (self.custo_estrada * numero_arestas)
 
-    def __str__(self) -> str:
-        _s = f"Grafo:\n"
-        for i, l in enumerate(self.grafo):
-            _s += f"\t{i}: {l}\n"
-        return _s
 
 if __name__ == '__main__':
     T = int(input())
@@ -67,7 +62,6 @@ if __name__ == '__main__':
             continue
 
         l = Livrolandia(N, M, B, E)
-        print(l)
 
         for _ in range(M):
             linha_com_variaveis_da_estrada = input().split()
@@ -75,5 +69,4 @@ if __name__ == '__main__':
             Y = int(linha_com_variaveis_da_estrada[1])
             l.insere_aresta(X, Y)
 
-        print(l)
         print(l.calcula_custo_minimo())
