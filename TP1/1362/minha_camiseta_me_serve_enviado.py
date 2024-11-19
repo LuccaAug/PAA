@@ -1,16 +1,3 @@
-"""
-Nosso amigo Victor é instrutor em um programa ambiental voluntário. O chefe de Victor pediu para ele distribuir N camisetas para M voluntários (N é múltiplo de seis, e N ≥ M). Cada voluntário deve receber exatamente uma camiseta (se N ≠ M, algumas camisetas podem sobrar). Há o mesmo número de camisetas disponíveis para cada tamanho de camiseta possível: XXL, XL, L, M, S e XS (siglas em inglês para P, M, G, etc.). Victor tem um pequeno problema: apenas dois tamanhos de camisetas servem para cada voluntário.
-
-Você deve escrever um programa que decide se Victor pode distribuir as camisetas de tal forma que todo voluntário tenha uma camiseta que lhe serve.
-
-Entrada
-A primeira linha da entrada contém o número de casos de teste.
-
-Para cada caso de teste, há uma linha contendo os números N e M. O número N é múltiplo de seis, 1 ≤ N ≤ 36, e indica o número total de camisetas disponíveis. O número M, 1 ≤ M ≤ 30, indica o número de voluntários, com N ≥ M. As próximas M linhas descrevem os voluntários, um por linha. Cada linha contém dois tamanhos de camiseta possíveis (XXL, XL, L, M, S ou XS) separados por um espaço, indicando quais tamanhos servem para o voluntário.
-
-Saída
-Para cada caso teste, imprima uma linha contendo YES se existe pelo menos uma maneira de distribuir as camisetas de tal forma que todo voluntário tenha uma camiseta que lhe serve, ou NO caso contrário.
-"""
 class DistribuicaoDeCamisetas:
     N: int
     M: int
@@ -38,14 +25,8 @@ class DistribuicaoDeCamisetas:
             voluntario +=1
 
     def _acha_caminho(self) -> list[tuple[int, int, int]]:
-        # print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-')
-        # print(self)
         def _DFS(v: int, vertices_visitados:list[bool], caminho: list[tuple[int, int, int]]):
             vertices_visitados[v] = True
-            # print('\t V: ', v)
-            # print('\t Vertices visitados: ', vertices_visitados)
-            # print('\t caminho: ', caminho)
-            # print()
             for u, c in enumerate(self.grafo_residual[v]):
                 if c == 0:
                     continue
@@ -82,7 +63,6 @@ class DistribuicaoDeCamisetas:
         self.grafo_residual = self.grafo_capacidade.copy()
 
         caminho_aumentante = self._acha_caminho()
-        # print('\tCaminho Achado: ', caminho_aumentante)
         while caminho_aumentante is not None:
             c = self._acha_capacidade_minima(caminho_aumentante)
 
@@ -91,7 +71,6 @@ class DistribuicaoDeCamisetas:
             self._atualiza_grafo_residual(caminho_aumentante, c)
 
             caminho_aumentante = self._acha_caminho()
-            # print('\tCaminho Achado: ', caminho_aumentante)
 
         return f
 
@@ -131,7 +110,6 @@ if __name__ == '__main__':
         voluntarios:list[tuple[int, int]]  = [(Tamanho[x].value for x in input().split()) for _ in range(0, M)]
 
         d = DistribuicaoDeCamisetas(N, M, voluntarios)
-        # print(d)
 
         resp = 'YES' if d.verifica_disponibilidade() else 'NO'
         print(resp)
