@@ -12,36 +12,6 @@ Saída
 Para cada caso de teste, o programa deve imprimir um inteiro indicando o número mínimo de apertos de botão para que o número do visor passe de A para B.
 """
 
-class Aparelho:
-    A: int
-    B: int
-    numero_atual: int
-    numero_de_botoes_apertados: int
-
-    def __init__(self, a: int, b: int) -> None:
-        self.A = a
-        self.B = b
-
-        self.numero_de_botoes_apertados = 0
-        self.numero_atual = a
-
-    def _incrementa(self) -> None:
-        self.numero_de_botoes_apertados += 1
-        self.numero_atual += 1
-
-    def _inverte(self) -> None:
-        self.numero_de_botoes_apertados += 1
-        numero_str = str(self.numero_atual)
-        numero_invertido_str = numero_str[::-1]
-        self.numero_atual = int(numero_invertido_str)
-
-    def __str__(self) -> str:
-        _s = f"A: {self.A}\n"
-        _s += f"B: {self.B}\n"
-        _s += f"numero_de_botoes_apertados: {self.numero_de_botoes_apertados}\n"
-        _s += f"numero_atual: {self.numero_atual}\n"
-        return _s
-
 if __name__ == '__main__':
     T = int(input())
     for _ in range(T):
@@ -49,5 +19,24 @@ if __name__ == '__main__':
         A = int(linha_com_a_b[0])
         B = int(linha_com_a_b[1])
 
-        aparelho = Aparelho(A, B)
-        print(aparelho)
+        lista_nivel: list[int] = [0]
+        lista_numero: list[int] = [A]
+        lista_numeros_ja_enfileirados: set[int] = {A}
+
+        while lista_numero[0] != B:
+            nivel_atual = lista_nivel.pop(0)
+            numero_atual = lista_numero.pop(0)
+
+            proximo_numero = numero_atual + 1
+            if proximo_numero not in lista_numeros_ja_enfileirados:
+                lista_nivel.append(nivel_atual + 1)
+                lista_numero.append(proximo_numero)
+                lista_numeros_ja_enfileirados.add(proximo_numero)
+
+            proximo_numero = int(str(numero_atual)[::-1])
+            if proximo_numero not in lista_numeros_ja_enfileirados:
+                lista_nivel.append(nivel_atual + 1)
+                lista_numero.append(proximo_numero)
+                lista_numeros_ja_enfileirados.add(proximo_numero)
+
+        print(lista_nivel[0])
