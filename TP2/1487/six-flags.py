@@ -12,6 +12,36 @@ Saída
 Para cada instância solucionada, você deverá imprimir um identificador Instancia H em que H é um número inteiro, sequencial e crescente a partir de 1. Na linha seguinte, deve ser impressa a pontuação total conseguida com a coleção determinada por seu programa. Com relação a quais são as atrações da coleção determinada, os colegas decidiram que iriam perguntar para você pessoalmente no futuro, já que eles não querem que outras pessoas saibam e venham a utilizá-la. Uma linha em branco deve ser impressa após cada caso de teste.
 """
 
+def resolve_problema_da_mochila(pesos, valores) -> int:
+    # TODO: fazer função que calcula o valor máximo no problema da mochila com repetição permitida
+    valor_maximo = int()
+    return valor_maximo
+
+
 if __name__ == '__main__':
-    # !TODO: fazer o programa, apenas estrutura montada
-    pass
+    i = 1
+    while True:
+        linha_com_n_t = input().split()
+        N = int(linha_com_n_t[0])
+        T = int(linha_com_n_t[1])
+
+        if N == 0 and T == 0:
+            break
+
+        duracao = list()
+        pontuacao = list()
+
+        for _ in range(N):
+            linha_com_d_p = input().split()
+
+            D = int(linha_com_d_p[0])
+            duracao.append(D)
+
+            P = int(linha_com_d_p[1])
+            pontuacao.append(P)
+
+        valor_total = resolve_problema_da_mochila(duracao, pontuacao)
+
+        print("Instância 1")
+        print(valor_total)
+        print()
