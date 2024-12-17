@@ -12,14 +12,34 @@ Saída
 Para cada instância solucionada, você deverá imprimir um identificador Instancia H em que H é um número inteiro, sequencial e crescente a partir de 1. Na linha seguinte, deve ser impressa a pontuação total conseguida com a coleção determinada por seu programa. Com relação a quais são as atrações da coleção determinada, os colegas decidiram que iriam perguntar para você pessoalmente no futuro, já que eles não querem que outras pessoas saibam e venham a utilizá-la. Uma linha em branco deve ser impressa após cada caso de teste.
 """
 
-def resolve_problema_da_mochila(pesos, valores) -> int:
-    # TODO: fazer função que calcula o valor máximo no problema da mochila com repetição permitida
-    valor_maximo = int()
-    return valor_maximo
+def resolve_problema_da_mochila(pesos: list[int], valores: list[int], peso_maximo: int) -> int:
+    pesos_valores = [(pesos[i], valores[i]) for i in range(len(pesos))]
+    pesos_valores = sorted(pesos_valores, key=lambda x: x[0])
+
+    # +1 para poder acrescentar o 0 no início
+    lista_auxiliar = [0] * (peso_maximo+1)
+
+    for i in range(1, peso_maximo+1):
+        a = lista_auxiliar[-1]
+        candidatos = [a]
+
+        for peso, valor in pesos_valores:
+            if peso > i:
+                continue
+
+            b = valor + lista_auxiliar[i-peso]
+
+            if b > a:
+                candidatos.append(b)
+
+        lista_auxiliar[i] = max(candidatos)
+
+    # print(lista_auxiliar)
+    return lista_auxiliar[-1]
 
 
 if __name__ == '__main__':
-    i = 1
+    i = 0
     while True:
         linha_com_n_t = input().split()
         N = int(linha_com_n_t[0])
@@ -28,20 +48,21 @@ if __name__ == '__main__':
         if N == 0 and T == 0:
             break
 
-        duracao = list()
-        pontuacao = list()
+        duracoes = list()
+        pontuacoes = list()
 
         for _ in range(N):
             linha_com_d_p = input().split()
 
             D = int(linha_com_d_p[0])
-            duracao.append(D)
+            duracoes.append(D)
 
             P = int(linha_com_d_p[1])
-            pontuacao.append(P)
+            pontuacoes.append(P)
 
-        valor_total = resolve_problema_da_mochila(duracao, pontuacao)
+        valor_total = resolve_problema_da_mochila(duracoes, pontuacoes, T)
 
-        print("Instância 1")
+        i += 1
+        print(f"Instancia {i}")
         print(valor_total)
         print()
