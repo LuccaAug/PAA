@@ -15,5 +15,30 @@ Para cada caso de teste da entrada seu programa deve imprimir uma única linha n
 """
 
 if __name__ == '__main__':
-    # !TODO: fazer o programa, apenas estrutura montada
-    pass
+    while True:
+        linha_com_n_d = input().split()
+        N = int(linha_com_n_d[0])
+        D = int(linha_com_n_d[1])
+
+        if N == 0 and D == 0:
+            break
+
+        numero = [int(d) for d in input()]
+        i = 0
+
+        # Enquanto tiver dígito para retirar no meio do número ou se chegar ao final da "ordenação"
+        while D != 0 and i < (N-1):
+            # print(f"i={i}  -  D={D}")
+            possiveis_maiores = numero[i:i+D+1]             # Seleciona o range para escolher o maior número
+            maior_digito = max(possiveis_maiores)           # Seleciona o maior número
+            indice = possiveis_maiores.index(maior_digito)  # Descobre o menor índice deste maior número
+            numero = numero[:i] + numero[i+indice:]         # Remove os dígitos entre os já ordenados e o maior dígito
+            D -= indice                                     # Remove o número de dígitos apagados da variável D
+            i += 1                                          # Soma um no índice que está sendo analisado
+
+        # Caso tenha parado por chegar ao fim da ordenação, deve remover os dígitos faltantes da direita
+        if D > 0:
+            numero = numero[:-D]
+
+        numero = [str(d) for d in numero]
+        print(''.join(numero))
