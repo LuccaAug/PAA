@@ -12,6 +12,57 @@ Saída
 Para cada caso de teste de entrada deve ser impresso um valor inteiro que determina o tempo que Roberto irá levar para entregar as suas pizzas seguido de um espaço em branco e do texto “min.”, conforme exemplo abaixo.
 """
 
+class Entrega:
+    quantidade_de_pizzas: int = 0
+    tempo_de_entrega: int = 0
+
+    def __init__(self, quantidade_de_pizzas: int, tempo_de_entrega: int):
+        self.quantidade_de_pizzas = quantidade_de_pizzas
+        self.tempo_de_entrega = tempo_de_entrega
+
+    def __add__(self, other):  # Soma dois objetos Entrega, retornando um novo objeto.
+        return Entrega(
+            self.quantidade_de_pizzas + other.quantidade_de_pizzas,
+            self.tempo_de_entrega + other.tempo_de_entrega
+        )
+
 if __name__ == '__main__':
-    # !TODO: fazer o programa, apenas estrutura montada
-    pass
+    while True:
+        N = int(input())
+        if N == 0:
+            break
+
+        P = int(input())
+
+        # Lista de entregas disponíveis
+        possiveis_entregas = []
+        for _ in range(N):
+            linha = input().split()
+            tempo = int(linha[0])
+            quantidade = int(linha[1])
+            possiveis_entregas.append(Entrega(quantidade, tempo))
+
+        # Matriz de programação dinâmica
+        matriz = [[Entrega() for _ in range(P + 1)] for _ in range(N + 1)]
+
+        # Preenchendo a matriz
+        for i in range(1, N + 1):
+            for j in range(P + 1):
+                entrega_atual = possiveis_entregas[i - 1]
+                if entrega_atual.quantidade_de_pizzas > j:
+                    # Não é possível incluir este pedido
+                    matriz[i][j] = matriz[i - 1][j]
+                else:
+                    # Decidir entre incluir ou não incluir o pedido
+                    sem_incluir = matriz[i - 1][j]
+                    com_incluir = matriz[i - 1][j - entrega_atual.quantidade_de_pizzas] + entrega_atual
+
+                    # Escolhe a melhor opção em termos de tempo
+                    if com_incluir.tempo_de_entrega > sem_incluir.tempo_de_entrega:
+                        matriz[i][j] = com_incluir
+                    else:
+                        matriz[i][j] = sem_incluir
+
+        # Melhor solução está em matriz[N][P], a última célula da matriz
+        resultado = matriz[N][P]
+        print(f"{resultado.tempo_de_entrega} min.")
