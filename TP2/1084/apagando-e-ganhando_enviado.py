@@ -7,19 +7,19 @@ if __name__ == '__main__':
         if N == 0 and D == 0:
             break
 
-        numero = [int(d) for d in input()]
-        i = 0
+        numero = [int(digito) for digito in input()]
+        numero_final = []
+        remocoes_restantes = D
 
-        while D != 0 and (i+1) <= (len(numero)-D):
-            possiveis_maiores = numero[i:i+D+1]
-            maior_digito = max(possiveis_maiores)
-            indice = possiveis_maiores.index(maior_digito)
-            numero = numero[:i] + numero[i+indice:]
-            D -= indice
-            i += 1
+        for digito in numero:
+            while (remocoes_restantes > 0) and (len(numero_final) > 0) and (digito > numero_final[-1]):
+                numero_final.pop()
+                remocoes_restantes -= 1
 
-        if D > 0:
-            numero = numero[:-D]
+            numero_final.append(digito)
 
-        numero = [str(d) for d in numero]
-        print(''.join(numero))
+        if remocoes_restantes > 0:
+            numero_final = numero_final[:-remocoes_restantes]
+
+        numero_final_str = [str(d) for d in numero_final]
+        print(''.join(numero_final_str))

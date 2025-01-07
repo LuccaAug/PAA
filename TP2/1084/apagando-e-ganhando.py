@@ -23,22 +23,24 @@ if __name__ == '__main__':
         if N == 0 and D == 0:
             break
 
-        numero = [int(d) for d in input()]
-        i = 0
+        numero = [int(digito) for digito in input()]
+        numero_final = []
+        remocoes_restantes = D
 
-        # Enquanto tiver dígito para retirar no meio do número ou se chegar ao final da "ordenação"
-        while D != 0 and i < (N-1):
-            # print(f"i={i}  -  D={D}")
-            possiveis_maiores = numero[i:i+D+1]             # Seleciona o range para escolher o maior número
-            maior_digito = max(possiveis_maiores)           # Seleciona o maior número
-            indice = possiveis_maiores.index(maior_digito)  # Descobre o menor índice deste maior número
-            numero = numero[:i] + numero[i+indice:]         # Remove os dígitos entre os já ordenados e o maior dígito
-            D -= indice                                     # Remove o número de dígitos apagados da variável D
-            i += 1                                          # Soma um no índice que está sendo analisado
+        # Percorre cada dígito (dos mais significativos pros menos significativos)
+        for digito in numero:
+            # Se ainda puder remover dígitos, remove caso o atual da resposta seja menor que o atual candidato
+            while (remocoes_restantes > 0) and (len(numero_final) > 0) and (digito > numero_final[-1]):
+                numero_final.pop()
+                remocoes_restantes -= 1
 
-        # Caso tenha parado por chegar ao fim da ordenação, deve remover os dígitos faltantes da direita
-        if D > 0:
-            numero = numero[:-D]
+            # Insere o atual candidato na resposta
+            numero_final.append(digito)
 
-        numero = [str(d) for d in numero]
-        print(''.join(numero))
+        # Caso não tenha removido tudo remove os dígitos menos significativos
+        if remocoes_restantes > 0:
+            numero_final = numero_final[:-remocoes_restantes]
+
+        # Converte a resposta para string e imprime
+        numero_final_str = [str(d) for d in numero_final]
+        print(''.join(numero_final_str))
