@@ -13,14 +13,14 @@ Para cada caso de teste de entrada deve ser impresso um valor inteiro que determ
 """
 
 class Entrega:
-    quantidade_de_pizzas: int = 0
-    tempo_de_entrega: int = 0
+    quantidade_de_pizzas: int
+    tempo_de_entrega: int
 
-    def __init__(self, quantidade_de_pizzas: int, tempo_de_entrega: int):
+    def __init__(self, quantidade_de_pizzas: int = 0, tempo_de_entrega: int = 0):
         self.quantidade_de_pizzas = quantidade_de_pizzas
         self.tempo_de_entrega = tempo_de_entrega
 
-    def __add__(self, other):  # Soma dois objetos Entrega, retornando um novo objeto.
+    def __add__(self, other):
         return Entrega(
             self.quantidade_de_pizzas + other.quantidade_de_pizzas,
             self.tempo_de_entrega + other.tempo_de_entrega
