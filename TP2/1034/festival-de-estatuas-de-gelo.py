@@ -13,5 +13,42 @@ Para cada instância, imprima o número mínimo de blocos necessários para obte
 """
 
 if __name__ == '__main__':
-    # !TODO: fazer o programa, apenas estrutura montada
-    pass
+    T = int(input())
+
+    for _ in range(T):
+        linha_com_n_e_m = input().split()
+        N = int(linha_com_n_e_m[0])
+        M = int(linha_com_n_e_m[1])
+
+        a = [int(x) for x in reversed(input().split())]  # Inverte a ordem pra otimizar o for
+        bloco_um = a[-1]  # Garantido que sempre existirá nas especificações do problema
+
+        # Matriz de programação dinâmica
+        lista_solucao = [0] * (M+1)
+        melhor_candidato = 0
+
+        # Preenchendo a matriz
+        for j in range(1, M+1):
+            melhor_candidato = melhor_candidato + 1
+
+            for bloco_atual in a:
+
+                if bloco_atual > j:  # Não é possível incluir este pedido, segue para o próximo bloco
+                    pass
+
+                elif bloco_atual == j:  # A melhor solução é apenas este bloco
+                    melhor_candidato = 1
+                    break  # Não precisa testar os demais blocos, ja que é a solução ideal
+
+                else:
+                    com_bloco_atual = lista_solucao[j - bloco_atual] + 1
+
+                    if com_bloco_atual < melhor_candidato:
+                        melhor_candidato = com_bloco_atual
+
+            lista_solucao[j] = melhor_candidato
+
+        #print("Lista: ", lista_solucao)
+
+        # Melhor solução está na última posição da lista, que é igual ao tamanho do bloco
+        print(lista_solucao[M])
