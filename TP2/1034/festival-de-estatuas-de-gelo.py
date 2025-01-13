@@ -21,34 +21,29 @@ if __name__ == '__main__':
         M = int(linha_com_n_e_m[1])
 
         a = [int(x) for x in reversed(input().split())]  # Inverte a ordem pra otimizar o for
-        bloco_um = a[-1]  # Garantido que sempre existirá nas especificações do problema
-
-        # Matriz de programação dinâmica
-        lista_solucao = [0] * (M+1)
+        lista_solucao = [0] * (M+1)  # Lista da programação dinâmica
         melhor_candidato = 0
 
-        # Preenchendo a matriz
+        # Preenchimento da lista
         for j in range(1, M+1):
             melhor_candidato = melhor_candidato + 1
 
-            for bloco_atual in a:
-
+            for bloco_atual in a[:-1]:
                 if bloco_atual > j:  # Não é possível incluir este pedido, segue para o próximo bloco
-                    pass
+                    continue
 
-                elif bloco_atual == j:  # A melhor solução é apenas este bloco
+                if bloco_atual == j:  # A melhor solução é apenas este bloco
                     melhor_candidato = 1
                     break  # Não precisa testar os demais blocos, ja que é a solução ideal
 
-                else:
-                    com_bloco_atual = lista_solucao[j - bloco_atual] + 1
+                com_bloco_atual = lista_solucao[j - bloco_atual] + 1
 
-                    if com_bloco_atual < melhor_candidato:
-                        melhor_candidato = com_bloco_atual
+                if com_bloco_atual < melhor_candidato:
+                    melhor_candidato = com_bloco_atual
 
             lista_solucao[j] = melhor_candidato
 
         #print("Lista: ", lista_solucao)
 
-        # Melhor solução está na última posição da lista, que é igual ao tamanho do bloco
+        # Melhor solução está na última posição da lista, que é igual ao tamanho do bloco fornecido na entrada
         print(lista_solucao[M])
